@@ -13,7 +13,16 @@ class AuthController extends Controller
         if (Auth::guard('karyawan')->attempt(['username' => $request->username, 'password' => $request->password])) {
             return redirect('/dashboard');
         } else {
-            echo "Gagal";
+            return redirect('/')->with(['warning' => 'Username / Password Salah']);
         }
+    }
+
+    public function proseslogout()
+    {
+        if (Auth::guard('karyawan')->check()) {
+            Auth::guard('karyawan')->logout();
+            return redirect('/');
+        }
+
     }
 }
