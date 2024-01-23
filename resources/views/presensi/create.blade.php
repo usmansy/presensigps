@@ -40,10 +40,17 @@
 
     <div class="row">
         <div class="col">
-            <button id="takeabsen" class="btn btn-primary btn-block">
-                <ion-icon name="camera-outline"></ion-icon>
-                Absen Masuk
-            </button>
+            @if ($cek > 0)
+                <button id="takeabsen" class="btn btn-danger btn-block">
+                    <ion-icon name="camera-outline"></ion-icon>
+                    Absen Pulang
+                </button>
+            @else
+                <button id="takeabsen" class="btn btn-primary btn-block">
+                    <ion-icon name="camera-outline"></ion-icon>
+                    Absen Masuk
+                </button>
+            @endif
         </div>
     </div>
 
@@ -75,7 +82,6 @@
             var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 17);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
             var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
             var circle = L.circle([position.coords.latitude, position.coords.longitude], {
@@ -89,5 +95,42 @@
         function errorCallback() {
 
         }
+
+        //Take Absen
+        $("#takeabsen").click(function(e) {
+            Webcam.snap(function(uri) {
+                image = uri;
+            });
+            var lokasi = $("#lokasi").val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('presensi.store') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    image: image,
+                    lokasi: lokasi,
+                },
+                cache: false,
+                success: function(response) {
+                    var status = response.split("|")
+                    if (status[0] == "success") {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: status[1],
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        })
+                        setTimeout("location.href='{{ route('dashboardkaryawan') }}'", 2000)
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Presensi gagal, silahkan hubungi admin',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        })
+                    }
+                }
+            });
+        });
     </script>
 @endpush
