@@ -59,10 +59,16 @@
             <div id="map"></div>
         </div>
     </div>
+
+    <audio id="notifikasi_in">
+        <source src="{{ asset('assets/audio/absen-masuk.m4a') }}" type="audio/x-m4a">
+    </audio>
 @endsection
 
 @push('myscript')
     <script>
+        var notifikasi_in = document.getElementById('notifikasi_in');
+
         Webcam.set({
             height: 480,
             width: 640,
@@ -114,13 +120,16 @@
                 success: function(response) {
                     var status = response.split("|")
                     if (status[0] == "success") {
+                        if (status[2] == "in") {
+                            notifikasi_in.play();
+                        }
                         Swal.fire({
                             title: 'Sukses',
                             text: status[1],
                             icon: 'success',
                             confirmButtonText: 'OK'
                         })
-                        setTimeout("location.href='{{ route('dashboardkaryawan') }}'", 2000)
+                        setTimeout("location.href='{{ route('dashboardkaryawan') }}'", 3000)
                     } else {
                         Swal.fire({
                             title: 'Error!',
