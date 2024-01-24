@@ -63,11 +63,15 @@
     <audio id="notifikasi_in">
         <source src="{{ asset('assets/audio/absen-masuk.m4a') }}" type="audio/x-m4a">
     </audio>
+    <audio id="notifikasi_out">
+        <source src="{{ asset('assets/audio/absen-pulang.m4a') }}" type="audio/x-m4a">
+    </audio>
 @endsection
 
 @push('myscript')
     <script>
         var notifikasi_in = document.getElementById('notifikasi_in');
+        var notifikasi_out = document.getElementById('notifikasi_out');
 
         Webcam.set({
             height: 480,
@@ -90,7 +94,7 @@
                 maxZoom: 19,
             }).addTo(map);
             var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
-            var circle = L.circle([position.coords.latitude, position.coords.longitude], {
+            var circle = L.circle([-7.673815637589477, 108.67975559751909], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
@@ -122,6 +126,8 @@
                     if (status[0] == "success") {
                         if (status[2] == "in") {
                             notifikasi_in.play();
+                        } else {
+                            notifikasi_out.play();
                         }
                         Swal.fire({
                             title: 'Sukses',
@@ -133,8 +139,8 @@
                     } else {
                         Swal.fire({
                             title: 'Error!',
-                            text: 'Presensi gagal, silahkan hubungi admin',
-                            icon: 'error',
+                            text: status[1],
+                            icon: 'warning',
                             confirmButtonText: 'OK'
                         })
                     }
