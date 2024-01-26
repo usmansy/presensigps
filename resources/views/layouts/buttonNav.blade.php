@@ -2,14 +2,14 @@
     <a href="{{ route('dashboardkaryawan') }}" class="item {{ request()->routeIs('dashboardkaryawan') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="home-outline"></ion-icon>
-            <strong>Home</strong>
+            <strong>Beranda</strong>
         </div>
     </a>
-    <a href="#" class="item">
+    <a href="{{ route('presensi.histori') }}" class="item {{ request()->routeIs('presensi.histori') ? 'active' : '' }}">
         <div class="col">
-            <ion-icon name="calendar-outline" role="img" class="md hydrated"
-                aria-label="calendar outline"></ion-icon>
-            <strong>Calendar</strong>
+            <ion-icon name="document-text-outline" role="img" class="md hydrated"
+                aria-label="document text outline"></ion-icon>
+            <strong>Riwayat</strong>
         </div>
     </a>
     <a href="{{ route('presensi.create') }}" class="item">
@@ -19,17 +19,15 @@
             </div>
         </div>
     </a>
-    <a href="#" class="item">
+    <a href="{{ route('presensi.izin') }}" class="item {{ request()->routeIs('presensi.izin') ? 'active' : '' }}">
         <div class="col">
-            <ion-icon name="document-text-outline" role="img" class="md hydrated"
-                aria-label="document text outline"></ion-icon>
-            <strong>Docs</strong>
+            <ion-icon name="calendar-outline"></ion-icon>
+            <strong>Izin</strong>
         </div>
     </a>
-    <a href="javascript:;" class="item">
+    <a href="{{ route('editprofilekaryawan') }}" class="item {{ request()->routeIs('editprofilekaryawan') ? 'active' : '' }}">
         <div class="col">
-            <ion-icon name="people-outline" role="img" class="md hydrated"
-                aria-label="people outline"></ion-icon>
+            <ion-icon name="people-outline" role="img" class="md hydrated" aria-label="people outline"></ion-icon>
             <strong>Profile</strong>
         </div>
     </a>
