@@ -13,6 +13,24 @@
     <!-- * App Header -->
 @endsection
 @section('content')
+    <div class="row" style="margin-top: 4rem">
+        <div class="col">
+            @php
+                $messagesuccess = Session::get('success');
+                $messageerror = Session::get('error');
+            @endphp
+            @if (Session::get('success'))
+                <div class="alert alert-success">
+                    {{ $messagesuccess }}
+                </div>
+            @endif
+            @if (Session::get('error'))
+                <div class="alert alert-danger">
+                    {{ $messageerror }}
+                </div>
+            @endif
+        </div>
+    </div>
     <div class="fab-button bottom-right" style="margin-bottom: 4rem">
         <a href="{{ route('presensi.buatizin') }}" class="fab"><ion-icon name="add-outline"></ion-icon></a>
     </div>

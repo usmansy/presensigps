@@ -11,6 +11,7 @@
 <script src="{{ asset('assets/js/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
 <!-- jQuery Circle Progress -->
 <script src="{{ asset('assets/js/plugins/jquery-circle-progress/circle-progress.min.js') }}"></script>
+
 <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>

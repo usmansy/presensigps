@@ -23,6 +23,5 @@ class AuthController extends Controller
             Auth::guard('karyawan')->logout();
             return redirect('/');
         }
-
     }
 }
