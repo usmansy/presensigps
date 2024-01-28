@@ -31,6 +31,33 @@
             @endif
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            @foreach ($dataIzin as $item)
+                <ul class="listview image-listview">
+                    <li>
+                        <div class="item">
+                            <div class="in">
+                                <div>
+                                    <b>{{ date('d-m-Y', strtotime($item->tgl_izin)) }} <small
+                                            class="badge bg-info">{{ $item->status == 's' ? 'Sakit' : ($item->status == 'i' ? 'Izin' : 'Dinas Luar') }}</small></b><br>
+                                    <small class="text-muted">{{ $item->keterangan }}</small>
+                                    {{-- <small class="text-muted">{{$item->jabatan}}</small> --}}
+                                </div>
+                                @if ($item->status_approved == 0)
+                                    <span class="badge bg-warning">Menunggu</span>
+                                @elseif ($item->status_approved == 1)
+                                    <span class="badge bg-success">Disetujui</span>
+                                @else
+                                    <span class="badge bg-danger">Ditolak</span>
+                                @endif
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            @endforeach
+        </div>
+    </div>
     <div class="fab-button bottom-right" style="margin-bottom: 4rem">
         <a href="{{ route('presensi.buatizin') }}" class="fab"><ion-icon name="add-outline"></ion-icon></a>
     </div>

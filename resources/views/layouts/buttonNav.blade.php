@@ -19,7 +19,7 @@
             </div>
         </div>
     </a>
-    <a href="{{ route('presensi.izin') }}" class="item {{ request()->routeIs('presensi.izin') ? 'active' : '' }}">
+    <a href="{{ route('presensi.izin') }}" class="item {{ request()->routeIs('presensi.izin') || request()->routeIs('presensi.buatizin') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="calendar-outline"></ion-icon>
             <strong>Izin</strong>

@@ -39,12 +39,12 @@
                     </div>
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="warning" style="font-size: 40px;">
+                            <a href="{{ route('presensi.histori') }}" class="warning" style="font-size: 40px;">
                                 <ion-icon name="document-text"></ion-icon>
                             </a>
                         </div>
                         <div class="menu-name">
-                            <span class="text-center">Histori</span>
+                            <span class="text-center">Riwayat</span>
                         </div>
                     </div>
                     <div class="item-menu text-center">
@@ -132,7 +132,7 @@
                         <div class="card-body text-center" style="padding: 16px 12px !important">
                             <div>
                                 <span class="badge bg-danger"
-                                    style="position: absolute; top:3px; right:10px; font-size:0.6rem; z-index:999">0</span>
+                                    style="position: absolute; top:3px; right:10px; font-size:0.6rem; z-index:999">{{ $rekapIzin->jmlizin + $rekapIzin->jmldinas }}</span>
                                 <ion-icon name="document-outline" style="font-size: 1.6rem;"
                                     class="text-success"></ion-icon>
                             </div>
@@ -147,7 +147,7 @@
                         <div class="card-body text-center" style="padding: 16px 12px !important">
                             <div>
                                 <span class="badge bg-danger"
-                                    style="position: absolute; top:3px; right:10px; font-size:0.6rem; z-index:999">0</span>
+                                    style="position: absolute; top:3px; right:10px; font-size:0.6rem; z-index:999">{{ $rekapIzin->jmlsakit == null ? 0 : $rekapIzin->jmlsakit }}</span>
                                 <ion-icon name="medkit-outline" style="font-size: 1.6rem;"
                                     class="text-warning"></ion-icon>
                             </div>

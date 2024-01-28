@@ -173,7 +173,9 @@ class PresensiController extends Controller
 
     public function izin()
     {
-        return view('presensi.izin');
+        $username = Auth::guard('karyawan')->user()->username;
+        $dataIzin = DB::table('pengajuan_izin')->where('username', $username)->get();
+        return view('presensi.izin', compact('dataIzin'));
     }
 
     public function buatizin()
@@ -199,7 +201,7 @@ class PresensiController extends Controller
         $simpan = DB::table('pengajuan_izin')->insert($data);
         if ($simpan) {
             return redirect('presensi/izin')->with(['success' => 'Data berhasil disimpan']);
-        }else{
+        } else {
             return redirect('presensi/izin')->with(['error' => 'Data gagal disimpan']);
         }
     }
