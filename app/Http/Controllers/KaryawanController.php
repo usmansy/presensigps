@@ -27,4 +27,14 @@ class KaryawanController extends Controller
         $departemen = DB::table('departemen')->get();
         return view('karyawan.index', compact('header_title', 'karyawan', 'departemen'));
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'username' => ['required','unique:username'],
+        ],[
+            'username.required' => 'Username harus diisi',
+            'username.unique' => 'Username sudah ada',
+        ]);
+    }
 }

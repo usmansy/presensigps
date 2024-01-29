@@ -63,5 +63,6 @@ Route::middleware(['auth:user'])->group(function() {
 
     //Karyawan
     Route::get('/panel/pegawai', [KaryawanController::class, 'index'])->name('pegawai');
+    Route::post('/panel/pegawai/store', [KaryawanController::class, 'store'])->name('pegawai.store');
 });
 
