@@ -3,7 +3,7 @@
     <div class="section" id="user-section">
         <div id="user-detail">
             <div class="avatar">
-                <img src="{{ !empty($dataprofile->foto) ? url('upload/image/karyawan/' . $dataprofile->foto) : url('upload/assets/img/sample/avatar/avatar1.jpg') }}"
+                <img src="{{ !empty($dataprofile->foto) ? url('upload/image/karyawan/' . $dataprofile->foto) : asset('assets/img/sample/avatar/avatar1.jpg') }}"
                     alt="avatar" class="imaged w64">
             </div>
             <div id="user-info">

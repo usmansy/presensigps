@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('izin', function (Blueprint $table) {
+        Schema::create('pengajuan_izin', function (Blueprint $table) {
             $table->id();
             $table->string('username', 50);
             $table->date('tgl_izin');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('izin');
+        Schema::drop('pengajuan_izin');
     }
 };
