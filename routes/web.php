@@ -47,17 +47,16 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::post('/presensi/{username}/updateprofile', [PresensiController::class, 'updateprofile'])->name('presensi.updateprofile');
 
     //History
-    Route::get('/presensi/histori',[PresensiController::class, 'histori'])->name('presensi.histori');
-    Route::post('/gethistori',[PresensiController::class, 'gethistori'])->name('gethistori');
+    Route::get('/presensi/histori', [PresensiController::class, 'histori'])->name('presensi.histori');
+    Route::post('/gethistori', [PresensiController::class, 'gethistori'])->name('gethistori');
 
     //Izin
-    Route::get('/presensi/izin',[PresensiController::class, 'izin'])->name('presensi.izin');
-    Route::get('/presensi/buatizin',[PresensiController::class, 'buatizin'])->name('presensi.buatizin');
-    Route::post('/presensi/storeizin',[PresensiController::class, 'storeizin'])->name('presensi.storeizin');
-
+    Route::get('/presensi/izin', [PresensiController::class, 'izin'])->name('presensi.izin');
+    Route::get('/presensi/buatizin', [PresensiController::class, 'buatizin'])->name('presensi.buatizin');
+    Route::post('/presensi/storeizin', [PresensiController::class, 'storeizin'])->name('presensi.storeizin');
 });
 
-Route::middleware(['auth:user'])->group(function() {
+Route::middleware(['auth:user'])->group(function () {
     Route::get('/proseslogoutadmin', [AuthController::class, 'proseslogoutadmin'])->name('logoutadmin');
     Route::get('/panel/dashboardadmin', [DashboardController::class, 'dashboardadmin'])->name('dashboardadmin');
 
@@ -65,4 +64,3 @@ Route::middleware(['auth:user'])->group(function() {
     Route::get('/panel/pegawai', [KaryawanController::class, 'index'])->name('pegawai');
     Route::post('/panel/pegawai/store', [KaryawanController::class, 'store'])->name('pegawai.store');
 });
-

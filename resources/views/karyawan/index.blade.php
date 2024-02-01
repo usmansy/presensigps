@@ -132,27 +132,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('pegawai.store') }}" method="post" id="frmKaryawan">
+                    {{-- <form action="{{ route('pegawai.store') }}" method="post" id="frmKaryawan"> --}}
+                    <div id="errorContainer" class="text-danger"></div>
+                    <form id="myForm">
                         @csrf
+                        <ul class="text-danger" id="formErrors"></ul>
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-icon mb-3">
                                     <span class="input-icon-addon">
                                         <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
                                             <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
                                         </svg>
                                     </span>
-                                    <input type="text" name="username" id="username" value="{{ old('username') }}"
-                                        class="form-control @error('username') is-invalid @enderror"
-                                        placeholder="Username">
-                                    @error('username')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <input type="text" name="username" id="username" value=""
+                                        class="form-control" placeholder="Username">
                                 </div>
                             </div>
                         </div>
@@ -244,7 +243,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-icon mb-3">
-                                    <select name="kode_dept" id="kode_dept" class="form-select">
+                                    <select name="kode_dept" id="kode_deptInput" class="form-select">
                                         <option value="">Departemen</option>
                                         @foreach ($departemen as $item)
                                             <option value="{{ $item->kode_dept }}">{{ $item->nama_dept }}</option>
@@ -282,7 +281,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-12">
-                                <button class="btn btn-primary w-100">
+                                <button type="submit" class="btn btn-primary w-100">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send"
                                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                         stroke="currentColor" fill="none" stroke-linecap="round"
@@ -293,6 +292,9 @@
                                             d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
                                     </svg>
                                     Simpan
+                                    <div class="spinner-border text-light" role="status" id="spinner"
+                                        style="display: none;">
+                                    </div>
                                 </button>
                             </div>
                         </div>
@@ -305,6 +307,108 @@
 
 @push('myscript')
     <script>
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(e) {
+                e.preventDefault();
+                $("#spinner").show();
+
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('pegawai.store') }}",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function(response) {
+                        //handle success
+                        $('#username').removeClass('is-invalid');
+                        $('#nama_lengkap').removeClass('is-invalid');
+                        $('#jabatan').removeClass('is-invalid');
+                        $('#kode_dept').removeClass('is-invalid');
+                        $('#no_hp').removeClass('is-invalid');
+                        $('#password').removeClass('is-invalid');
+                        $("#spinner").hide();
+                    },
+                    error: function(response) {
+                        $('#formErrors').empty();
+                        if (response.responseJSON.errors.username) {
+                            $('#username').addClass('is-invalid');
+                            response.responseJSON.errors.username.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        } else {
+                            $('#username').removeClass('is-invalid');
+                        }
+                        if (response.responseJSON.errors.nama_lengkap) {
+                            $('#nama_lengkap').addClass('is-invalid');
+                            response.responseJSON.errors.nama_lengkap.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        }
+                        if (response.responseJSON.errors.nik) {
+                            $('#nik').addClass('is-invalid');
+                            response.responseJSON.errors.nik.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        }
+                        if (response.responseJSON.errors.jabatan) {
+                            $('#jabatan').addClass('is-invalid');
+                            response.responseJSON.errors.jabatan.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        }
+                        if (response.responseJSON.errors.kode_dept) {
+                            $('#kode_deptInput').addClass('is-invalid');
+                            response.responseJSON.errors.kode_dept.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        }
+                        if (response.responseJSON.errors.no_hp) {
+                            $('#no_hp').addClass('is-invalid');
+                            response.responseJSON.errors.no_hp.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        }
+                        if (response.responseJSON.errors.password) {
+                            $('#password').addClass('is-invalid');
+                            response.responseJSON.errors.password.forEach(function(error) {
+                                $('#formErrors').append('<li>' + error + '</li>');
+                            });
+                        }
+                        $("#spinner").hide();
+                    }
+                });
+            });
+        });
+
+        // $("#myForm").submit(function(e) {
+        //     e.preventDefault();
+
+        //     $("#spinner").show();
+        //     $.ajax({
+        //         type: "post",
+        //         url: "{{ route('pegawai.store') }}",
+        //         data: $("#myForm").serialize(),
+        //         success: function(response) {
+        //             alert('Form berhasil disimpan');
+        //             $("#spinner").hide();
+        //         },
+        //         error: function(response) {
+        //             var errors = response.responseJSON.errors;
+        //             var errorContainer = $("#errorContainer");
+
+        //             errorContainer.html('');
+        //             $.each(errors, function(field, messages) {
+        //                 $.each(messages, function(index, message) {
+        //                     errorContainer.append('<p>' + message + '<p>');
+        //                 });
+        //             });
+        //             $("#spinner").hide();
+        //         }
+        //     });
+        // });
+
+
+
+
         // $("#frmKaryawan").submit(function(e) {
         //     var username = $("#username").val();
         //     var nama_lengkap = $("#nama_lengkap").val();
