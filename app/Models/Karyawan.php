@@ -14,6 +14,7 @@ class Karyawan extends Authenticatable
 
     protected $table = "karyawan";
     protected $primaryKey = "id";
+    public $timestamps = false;
 
     protected $guarded = [];
 
