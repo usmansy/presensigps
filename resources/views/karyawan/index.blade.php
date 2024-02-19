@@ -106,8 +106,15 @@
                                                         <td><img src="{{ !empty($item->foto) ? url('upload/image/karyawan/' . $item->foto) : url('assets/img/sample/avatar/avatar1.jpg') }}"
                                                                 alt="avatar" class="avatar"></td>
                                                         <td>{{ $item->nama_dept }}</td>
-                                                        <td><button class=" btn btn-warning editButton"
-                                                                data-id="1">Edit</button></td>
+                                                        <td><button class=" btn btn-warning editBtn"
+                                                                data-id="{{ $item->id }}"
+                                                                data-nik="{{ $item->nik }}"
+                                                                data-username="{{ $item->username }}"
+                                                                data-nama="{{ $item->nama_lengkap }}"
+                                                                data-jabatan="{{ $item->jabatan }}"
+                                                                data-dept="{{ $item->kode_dept }}"
+                                                                data-hp="{{ $item->no_hp }}" data-bs-toggle="modal"
+                                                                data-bs-target="#modal-editKaryawan">Edit</button></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -130,8 +137,8 @@
 
 @push('myscript')
     <script>
-        //Input Data
         $(document).ready(function() {
+            //Input Data
             $('#myForm').on('submit', function(e) {
                 e.preventDefault();
 
@@ -203,12 +210,12 @@
                             $('#no_hp').removeClass('is-invalid');
                         }
                         if (response.responseJSON.errors.kode_dept) {
-                            $('#kode_deptInput').addClass('is-invalid');
+                            $("#myForm").find('#kode_dept').addClass('is-invalid');
                             response.responseJSON.errors.kode_dept.forEach(function(error) {
                                 $('#formErrors').append('<li>' + error + '</li>');
                             });
                         } else {
-                            $('#kode_deptInput').removeClass('is-invalid');
+                            $('#myForm').find('#kode_dept').removeClass('is-invalid');
                         }
                         if (response.responseJSON.errors.password) {
                             $('#password').addClass('is-invalid');
@@ -226,18 +233,32 @@
                         } else {
                             $('#foto').removeClass('is-invalid');
                         }
-                        $("#spinner").hide();
-                        Swal.fire(
-                            'Error!',
-                            'Data gagal disimpan.',
-                            'error'
-                        );
                     }
                 });
             });
+
+            //Edit Data
+            $('.editBtn').on('click', function() {
+                var id = $(this).attr('data-id');
+                var nik = $(this).attr('data-nik');
+                var username = $(this).attr('data-username');
+                var nama = $(this).attr('data-nama');
+                var jabatan = $(this).attr('data-jabatan');
+                var dept = $(this).attr('data-dept');
+                var hp = $(this).attr('data-hp');
+
+                //display
+                $('#editMyForm').find('#id').val(id);
+                $('#editMyForm').find('#username').val(username);
+                $('#editMyForm').find('#nama_lengkap').val(nama);
+                $('#editMyForm').find('#nik').val(nik);
+                $('#editMyForm').find('#jabatan').val(jabatan);
+                $('#editMyForm').find('#no_hp').val(hp);
+                $('#editMyForm').find('#kode_dept').val(dept);
+
+                //Update
+
+            });
         });
-
-
-        //Edit Data
     </script>
 @endpush

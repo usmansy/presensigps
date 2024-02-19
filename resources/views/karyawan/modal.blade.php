@@ -17,16 +17,16 @@
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
                                         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
                                     </svg>
                                 </span>
-                                <input type="text" name="username" id="username" value=""
-                                    class="form-control" placeholder="Username">
+                                <input type="text" name="username" id="username" value="" class="form-control"
+                                    placeholder="Username">
                             </div>
                         </div>
                     </div>
@@ -36,9 +36,9 @@
                                 <span class="input-icon-addon">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-user-square" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        class="icon icon-tabler icon-tabler-user-square" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <path d="M9 10a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                         <path d="M6 21v-1a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v1" />
@@ -68,8 +68,8 @@
                                             d="M17 8h2.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1 -1.5 1.5h-1.5h1.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1 -1.5 1.5h-2.5" />
                                     </svg>
                                 </span>
-                                <input type="text" name="nik" id="nik" value=""
-                                    class="form-control" placeholder="NIK/NIP">
+                                <input type="text" name="nik" id="nik" value="" class="form-control"
+                                    placeholder="NIK/NIP">
                             </div>
                         </div>
                     </div>
@@ -79,9 +79,9 @@
                                 <span class="input-icon-addon">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-arrows-split" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        class="icon icon-tabler icon-tabler-arrows-split" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <path d="M21 17h-8l-3.5 -5h-6.5" />
                                         <path d="M21 7h-8l-3.495 5" />
@@ -118,7 +118,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
-                                <select name="kode_dept" id="kode_deptInput" class="form-select">
+                                <select name="kode_dept" id="kode_dept" class="form-select">
                                     <option value="">Departemen</option>
                                     @foreach ($departemen as $item)
                                         <option value="{{ $item->kode_dept }}">{{ $item->nama_dept }}</option>
@@ -181,7 +181,7 @@
 </div>
 
 {{-- Modal Edit Data --}}
-<div class="modal modal-blur fade" id="modal-inputKaryawan" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-editKaryawan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -191,8 +191,9 @@
             <div class="modal-body">
                 {{-- <form action="{{ route('pegawai.store') }}" method="post" id="frmKaryawan"> --}}
                 <div id="errorContainer" class="text-danger"></div>
-                <form id="myForm" enctype="multipart/form-data">
+                <form id="editMyForm" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="id" id="id">
                     <ul class="text-danger" id="formErrors"></ul>
                     <div class="row">
                         <div class="col-12">
@@ -208,7 +209,7 @@
                                     </svg>
                                 </span>
                                 <input type="text" name="username" id="username" value=""
-                                    class="form-control" placeholder="Username">
+                                    class="form-control" placeholder="Username" disabled>
                             </div>
                         </div>
                     </div>
@@ -300,7 +301,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
-                                <select name="kode_dept" id="kode_deptInput" class="form-select">
+                                <select name="kode_dept" id="kode_dept" class="form-select">
                                     <option value="">Departemen</option>
                                     @foreach ($departemen as $item)
                                         <option value="{{ $item->kode_dept }}">{{ $item->nama_dept }}</option>

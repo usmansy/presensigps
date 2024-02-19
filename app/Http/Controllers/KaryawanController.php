@@ -28,8 +28,9 @@ class KaryawanController extends Controller
         }
         $karyawan = $query->paginate(5);
 
+        $karyawanID = DB::table('karyawan')->where('karyawan.kode_dept',$request->id)->first();
         $departemen = DB::table('departemen')->get();
-        return view('karyawan.index', compact('header_title', 'karyawan', 'departemen'));
+        return view('karyawan.index', compact('header_title', 'karyawan', 'departemen', 'karyawanID'));
     }
 
     public function store(Request $request)
